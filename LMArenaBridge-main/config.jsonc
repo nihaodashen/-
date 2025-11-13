@@ -1,0 +1,130 @@
+{
+  // 版本号
+  // 用于程序更新检查，请不要手动修改。
+  "version": "2.7.6",
+
+  // --- 会话设置 ---
+  // 当前 LMArena 页面的会话 ID。
+  // 通过运行 id_updater.py 可以自动更新。
+  "session_id": "019a5368-4e2d-7d31-be55-e5c3d28d25df",
+
+  // --- ID 更新器专用配置 ---
+  // id_updater.py 上次使用的模式 ('direct_chat' 或 'battle')
+  "id_updater_last_mode": "battle",
+  // id_updater.py 在 Battle 模式下，要更新的目标 ('A' 或 'B')
+  "id_updater_battle_target": "B",
+
+  // --- 更新设置 ---
+  // 开关：自动检查更新
+  // 设置为 true，程序启动时会连接到 GitHub 检查新版本。
+  "enable_auto_update": true,
+
+  // --- 功能开关 ---
+
+  // 功能开关：使用无头模式
+  // 设置为 true 时，所有请求将直接由 Python 使用 HTTP 客户端发送到 LMArena API，
+  // 不再需要油猴脚本和浏览器参与。只需要在 .env 文件中提供有效的 cookie。
+  // 设置为 false 时，将使用传统的油猴脚本模式（需要浏览器和 WebSocket 连接）。
+  "use_headless_mode": false,
+
+  // 功能开关：绕过敏感词检测
+  // 在原始用户请求的对话中，额外注入一个内容为空的用户消息，以尝试绕过敏感词审查。
+  "bypass_enabled": true,
+
+  // 功能开关：酒馆模式 (Tavern Mode)
+  // 此模式专为需要完整历史记录注入的场景设计（如酒馆AI、SillyTavern等）。
+  "tavern_mode_enabled": true,
+
+  // --- 文件床设置 ---
+  // 开关：启用文件床
+  // 设置为 true 时，所有图片等多媒体附件将首先上传到您自建的文件床服务器，
+  // 然后将返回的 URL 用于后续请求，而不是直接发送 base64 数据。
+  "file_bed_enabled": true,
+
+  // 文件床上传API的URL
+  // 这是您 file_bed_server/main.py 服务的 /upload 端点地址。
+  // 注意: 为了兼容可能存在的旧版解析器，建议将 // 转义为 \/\/
+  "file_bed_upload_url": "https:\/\/api.spinsnow.fun/file-bed-server/upload",
+
+  // 文件床 API Key
+  // 如果您在 file_bed_server/main.py 中设置了 API_KEY，请在此处填写。
+  "file_bed_api_key": "your_secret_api_key",
+
+  // --- 模型映射设置 ---
+
+  // 开关：当模型映射不存在时，使用默认ID
+  // 如果设置为 true，当请求的模型在 model_endpoint_map.json 中找不到时，
+  // 将会使用 config.jsonc 中定义的全局 session_id 和 message_id。
+  // 如果设置为 false，找不到映射时将返回错误。
+  "use_default_ids_if_mapping_not_found": true,
+
+  // --- 高级设置 ---
+
+  // 流式响应超时时间（秒）
+  // 服务器等待来自浏览器的下一个数据块的最长时间。非流式也使用此值。
+  // 如果您的网络连接较慢或模型响应时间很长，可以适当增加此值。
+  "stream_response_timeout_seconds": 360,
+
+  // --- 自动重启设置 ---
+
+  // 开关：启用空闲自动重启
+  // 当服务器在指定时间内（如下所设）没有收到任何 API 请求时，将自动重启。
+  "enable_idle_restart": true,
+
+  // 空闲重启超时时间（秒）
+  // 服务器在“检查与更新完毕”后，若超过此时长未收到任何请求，则会重启。
+  // 5分钟 = 300秒。设置为 -1 可禁用此超时功能（即使上面开关为true）。
+  "idle_restart_timeout_seconds": -1,
+
+  // --- 安全设置 ---
+
+  // API Key
+  // 设置一个 API Key 来保护您的服务。
+  // 如果设置了此值，所有到 /v1/chat/completions 的请求都必须在 Authorization 头部中包含正确的 Bearer Token。
+  // --- Cloudscraper 配置 ---
+  
+  // JavaScript 解释器
+  // 可选值: "js2py" (默认，最兼容), "nodejs" (需要安装 Node.js), "native" (内置)
+  "cloudscraper_interpreter": "js2py",
+
+  // 开关：启用隐身模式
+  // 启用后会模拟更真实的人类浏览器行为
+  "cloudscraper_stealth_enabled": true,
+
+  // 挑战延迟（秒）
+  // Cloudflare 通常要求等待 5 秒后才能提交挑战答案
+  "cloudscraper_delay": 5,
+
+  // 开关：Cloudscraper 调试模式
+  // 启用后会显示详细的人机验证绕过过程信息
+  "cloudscraper_debug": false,
+
+  // 浏览器指纹轮换间隔（请求次数）
+  // 每 N 次请求后自动更换浏览器指纹，0 表示禁用轮换
+  // 建议设置为 10-20 之间
+  "fingerprint_rotation_requests": 2,
+
+  // --- 连接池配置 ---
+  
+  // 开关：启用 Scraper 连接池
+  // 连接池可以显著提高并发性能，建议启用
+  "use_scraper_pool": true,
+  
+  // Scraper 连接池大小
+  // 池中维护的 scraper 实例数量
+  // 建议设置为预期最大并发请求数的 50%-100%
+  
+  // 线程池大小
+  // 用于处理 cloudscraper 同步调用的专用线程池
+  // 建议设置为 scraper_pool_size 的 2-5 倍
+  // 低负载: 20-30, 中负载: 50, 高负载: 100
+  "thread_pool_size": 50,
+  
+  // 流式数据队列大小
+  // 用于缓冲从网络接收到的数据块
+  // 较大的值可以处理更快的网络速度，但会占用更多内存
+  // 推荐值: 200-1000
+  "stream_queue_size": 500,
+  "scraper_pool_size": 50,
+  "api_key": ""
+}
